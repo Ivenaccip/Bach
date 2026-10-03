@@ -1,0 +1,39 @@
+{
+  "name": "bach-strudel-tools",
+  "private": true,
+  "type": "module",
+  "description": "Verificador: evalua codigo Strudel con el motor real (@strudel/*) y vuelca los eventos",
+  "dependencies": {
+    "@strudel/core": "1.2.2",
+    "@strudel/mini": "1.2.2",
+    "@strudel/tonal": "1.2.2",
+    "@strudel/transpiler": "1.2.2"
+  },
+  "overrides": {
+    "@tonaljs/abc-notation": "4.9.1",
+    "@tonaljs/array": "4.8.4",
+    "@tonaljs/chord": "4.10.2",
+    "@tonaljs/chord-detect": "4.9.1",
+    "@tonaljs/chord-type": "4.8.2",
+    "@tonaljs/collection": "4.9.0",
+    "@tonaljs/core": "4.10.4",
+    "@tonaljs/duration-value": "4.9.0",
+    "@tonaljs/interval": "4.8.2",
+    "@tonaljs/key": "4.11.2",
+    "@tonaljs/midi": "4.10.2",
+    "@tonaljs/mode": "4.9.2",
+    "@tonaljs/note": "4.12.1",
+    "@tonaljs/pcset": "4.10.1",
+    "@tonaljs/pitch": "5.0.1",
+    "@tonaljs/pitch-distance": "5.0.5",
+    "@tonaljs/pitch-interval": "5.0.2",
+    "@tonaljs/pitch-note": "6.1.0",
+    "@tonaljs/progression": "4.9.2",
+    "@tonaljs/range": "4.9.2",
+    "@tonaljs/roman-numeral": "4.9.1",
+    "@tonaljs/scale": "4.13.4",
+    "@tonaljs/scale-type": "4.9.2",
+    "@tonaljs/time-signature": "4.9.0",
+    "@tonaljs/tonal": "4.10.0"
+  }
+}
