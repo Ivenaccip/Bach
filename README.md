@@ -1,6 +1,6 @@
 # Bach → Strudel
 
-Flujo "pieza ya hecha → analizar → código Strudel" (strudel.cc), probado con Bach por ser dominio público. Resultados por pieza en su carpeta; empieza por [`bwv846/README.md`](bwv846/README.md).
+Flujo "pieza ya hecha → analizar → código Strudel" (strudel.cc), probado con Bach por ser dominio público. Resultados por pieza en su carpeta: [`bwv846/`](bwv846/README.md) (Preludio de Bach, de partitura a Strudel) y [`electronica/`](electronica/README.md) (tema original de house melódico).
 
 ## Reproducir
 
@@ -14,6 +14,12 @@ python tools/clean_midi.py bwv846/bach_clean.mid bwv846/chunks/c01_compases_01-0
 python tools/detect_figure.py bwv846/bach_clean.mid
 python tools/verify_strudel.py bwv846/bach.strudel.js bwv846/chunks/c01_compases_01-04.mid --bars 4 --strict
 python tools/test_clean_midi.py
+
+# tema electronico
+node tools/strudel_events.mjs electronica/horizonte_violeta.strudel.js --bars 72 --all > ev.json
+python tools/analyze_track.py ev.json --sections "intro:8,subida:8,estribillo:16,pausa:8,subida2:8,estribillo2:16,cierre:8" \
+  --roles "red:bombo,orange:palmada,yellow:hat cerrado,white:hat abierto,brown/sd:redoble,brown/rim:perc,pink:crash,blue:bajo,purple:pad,magenta:stab,cyan:melodia,green:arpegio,grey:ruido" --scale "A B C D E F G G#"
+python tools/strudel_link.py electronica/horizonte_violeta.strudel.js electronica/strudel_link.txt
 ```
 
 ## Herramientas (`tools/`)
@@ -23,8 +29,10 @@ python tools/test_clean_midi.py
 | `score_to_midi.py` | Partitura (corpus de music21 o MusicXML) → MIDI; imprime la procedencia para anotar la licencia |
 | `clean_midi.py` | Rejilla de 16avos, borra notas cortas/débiles, une re-ataques de audio, recorta compases (`--bars`). Con `--audio` estima el tempo con librosa (suele dar el doble o la mitad: revisar) |
 | `detect_figure.py` | Comprueba qué compases siguen la figura de acorde arpegiado y saca sus acordes |
-| `strudel_events.mjs` | Evalúa código Strudel con el motor real y vuelca los eventos |
+| `strudel_events.mjs` | Evalúa código Strudel con el motor real y vuelca los eventos (`--all` incluye batería y parámetros) |
 | `verify_strudel.py` | Compara código Strudel contra un MIDI: tempo, compases, notas, duraciones |
+| `analyze_track.py` | Analiza un tema electrónico sin oírlo: forma, densidad por capa, escala, armonía, rejilla de la batería, registros, barridos de filtro |
+| `strudel_link.py` | Genera el enlace de strudel.cc de un archivo y comprueba que decodifica igual |
 | `run_web_app.cjs` | Corre la web app de MIDI-To-Strudel en local (Chromium headless) cuando la alojada no es alcanzable |
 
 Las conversiones MIDI → Strudel las hacen [`beejsbj/midi-strudel`](https://github.com/beejsbj/midi-strudel) (su repositorio no incluye archivo de licencia) y [`Emanuel-de-Jong/MIDI-To-Strudel`](https://github.com/Emanuel-de-Jong/MIDI-To-Strudel) (GPL-3.0). Se clonan aparte; no hay código suyo en este repositorio.
