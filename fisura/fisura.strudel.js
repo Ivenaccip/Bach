@@ -37,7 +37,7 @@ const melodia = note(`<
 
 // ---------- capas (cada una lleva un .color que sirve de etiqueta) ----------
 // bateria TR-808 en medio tiempo
-const kick  = s("<[bd ~ ~ ~ ~ ~ ~ ~ ~ ~ bd ~ ~ ~ ~ ~] [bd ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ bd ~ ~]>").bank("RolandTR808").gain(1.35).color("red")
+const kick  = s("<[bd ~ ~ ~ ~ ~ ~ ~ ~ ~ bd ~ ~ ~ ~ ~] [bd ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ bd ~ ~]>").bank("RolandTR808").gain(1.2).color("red")
 const snare = s("~ ~ sd ~").bank("RolandTR808").gain(.9).color("orange")
 const clap  = s("~ ~ cp ~").bank("RolandTR808").gain(.5).color("brown")
 const hats  = s("hh*16").bank("RolandTR808").gain("[.28 .15 .38 .15]*4").color("yellow")
@@ -45,7 +45,7 @@ const ohat  = s("<[~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ oh ~] ~>").bank("RolandTR808").ga
 const shaker = s("sh*8").bank("RolandTR808").gain(.2).color("silver")
 const crash = s("cr").bank("RolandTR808").gain(.5).color("pink")
 const relleno = s("~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ht ht mt lt").bank("RolandTR808").gain(.5).color("teal")
-const redoble = s("sd*<8 8 16 32>").bank("RolandTR808").gain("<.3 .4 .55 .7>").color("teal")
+const redoble = s("sd*<8 8 16 32>").bank("RolandTR808").gain("<.25 .32 .44 .55>").color("teal")
 
 // sub de seno: una nota por negra, sigue la raiz del acorde
 const sub = raices.segment(4).s("sine").attack(.01).release(.08).gain(.42).mask(gate).color("blue")

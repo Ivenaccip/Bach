@@ -38,16 +38,21 @@ python tools/analyze_track.py ev.json \
   --scale "D E F# G A B C#"
 ```
 
-El código evalúa con el motor real (`@strudel/core` 1.2.2): 126 bpm, 88 compases y 4768 eventos. El analizador da "sin problemas":
+El código evalúa con el motor real (`@strudel/core` 1.2.2): 126 bpm, 88 compases y 4494 eventos. El analizador da "sin problemas":
 
 - 0 notas fuera de Re mayor en todas las capas; la raíz del bajo está siempre en el acorde de su compás.
 - Melodía: 276 notas, 222 del acorde (80%), 18 séptimas y 36 notas de paso (9.ª y 6.ª); ninguna ajena al acorde cae en tiempo fuerte (la primera versión tenía 3, que cambié).
-- Bombo en cada negra, palmada en 2 y 4 y hat abierto a contratiempo; los barridos de filtro suben dentro de su subida.
+- Todos los bombos caen en una negra (pisotón en 1 y 3; a negras en subidas y drops), las palmadas en 2 y 4 y el hat abierto a contratiempo; los barridos de filtro suben dentro de su subida.
 
-Además se renderizó con `tools/render_strudel.mjs` y se midió el audio por compás: la intro arranca suave y el pad y el pisotón entran en el 5; los graves (40-110 Hz) desaparecen en la pausa; el volumen sube a lo largo de las subidas, se mantiene parejo en los drops y cae a silencio en el cierre. El pico del audio es 0,95 (sin recorte): primero la mezcla llegaba a 1,07, así que bajé el bombo y la palmada un 12 %.
+Además se renderizó con `tools/render_strudel.mjs` y se midió el audio:
+
+- **Entrada de capas.** Se listó en qué compases suena cada capa y coincide con la tabla de arriba (la primera versión tenía las máscaras `desde()` mal escritas y todas las capas sonaban desde el principio de la sección; ya está corregido: hay que envolver esas cadenas en `mini(...)`).
+- **Estructura del audio.** La intro arranca suave y el pad y el pisotón entran en el 5; en la estrofa el volumen se duplica al entrar el bajo y el pad en el 17; los graves (40-110 Hz) desaparecen en la pausa; el volumen sube a lo largo de las subidas, se mantiene parejo en los drops y cae a silencio en el cierre.
+- **Equilibrio.** Cada capa se tocó por separado y se midió su volumen: la guitarra y los acordes cortos estaban unos 15 dB por debajo del piano (inaudibles) y el lead unos 10 dB; los subí, y bajé el piano dentro del drop.
+- **Pico.** 0,97 en todo el tema (sin recorte; en strudel.cc llegaría igual).
 
 **Lo que NO está verificado:**
-- **Cómo suena.** Ni el equilibrio entre piano, guitarra, bajo y lead, ni si la "guitarra" parece una guitarra, ni si el piano en el drop tapa la melodía. Los volúmenes los ajusté midiendo el pico, no de oído.
+- **Cómo suena.** Los volúmenes los ajusté midiendo cada capa, no de oído: no sé si el equilibrio entre piano, guitarra, bajo y lead te gusta, ni si la "guitarra" parece una guitarra.
 - Que el enlace abra bien en strudel.cc (no puedo abrirlo desde aquí); sí comprobé que decodifica byte a byte al archivo.
 - Que strudel.cc corra una versión compatible con 1.2.2 y cargue `RolandTR909` y `piano` por defecto.
 - Rendimiento: pad, acordes y lead suman muchas voces `supersaw`; en un equipo flojo puede entrecortarse. Bajar `unison(3)` a `unison(2)` alivia.
