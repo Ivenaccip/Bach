@@ -34,7 +34,7 @@ const relleno  = s("~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ht ht mt lt").bank("RolandTR909").ga
 
 // bajo: largo en la estrofa, a contratiempo entre los bombos en el drop
 const bajoLargo = raices.s("sawtooth").lpf(260).release(.25).gain(.25).color("blue")
-const bajo      = raices.struct("~ x ~ x ~ x ~ x").s("sawtooth").lpf(450).release(.1).gain(.4).color("blue")
+const bajo      = raices.struct("~ x ~ x ~ x ~ x").s("sawtooth").lpf(450).release(.1).gain(.55).color("blue")
 
 // piano: arpegio de corcheas y la melodia
 const pianoArp = acordes.arp("[0 1 2 1]*2").s("piano").gain(.5).room(.3).size(3).orbit(2).color("green")
@@ -42,9 +42,9 @@ const pianoMel = melodia.s("piano").clip(1.5).gain(.5).room(.3).size(3).orbit(2)
 
 // "guitarra" de pisoton (sierra con filtro y caida rapida) y acordes cortos a contratiempo
 const strum = acordes.struct("x ~ x x ~ x x ~").s("sawtooth").lpf(2200).decay(.18).sustain(0).release(.1)
-                .gain(.15).room(.25).size(2).orbit(2).color("gold")
+                .gain(.45).room(.25).size(2).orbit(2).color("gold")
 const stab  = acordes.struct("[~ x]*4").s("sawtooth").lpf(2800).decay(.12).sustain(0).release(.06)
-                .gain(.17).room(.25).size(2).orbit(2).color("magenta")
+                .gain(.5).room(.25).size(2).orbit(2).color("magenta")
 
 // pad largo y pad "bombeado" (volumen que cae con cada bombo, como un sidechain)
 const padLargo  = acordes.s("supersaw").unison(3).lpf(1400).release(.4).gain(.17)
@@ -54,12 +54,12 @@ const padBombeo = acordes.struct("x*8").s("supersaw").unison(3).lpf(1800).releas
 
 // melodia principal (drop), suave (estrofa), octava arriba y arpegio de pluck
 const lead = melodia.s("supersaw").unison(3).lpf(4200).attack(.003).decay(.2).sustain(.3).release(.25).clip(1.6)
-               .gain(.25).delay(.3).delaytime(.357).delayfeedback(.4).room(.25).size(3).orbit(3).color("cyan")
+               .gain(.6).delay(.3).delaytime(.357).delayfeedback(.4).room(.25).size(3).orbit(3).color("cyan")
 const leadSuave = melodia.s("triangle").attack(.02).release(.5).clip(3)
-               .gain(.22).delay(.3).delaytime(.357).delayfeedback(.4).room(.25).size(3).orbit(3).color("cyan")
-const leadAlto = lead.transpose(12).gain(.11)
+               .gain(.45).delay(.3).delaytime(.357).delayfeedback(.4).room(.25).size(3).orbit(3).color("cyan")
+const leadAlto = lead.transpose(12).gain(.22)
 const arpPluck = acordes.arp("[0 1 2 1]*4").s("triangle").lpf(2600).decay(.12).sustain(0).release(.05)
-                   .gain(.15).delay(.3).delaytime(.357).delayfeedback(.4).room(.25).size(3).orbit(3).color("lime")
+                   .gain(.22).delay(.3).delaytime(.357).delayfeedback(.4).room(.25).size(3).orbit(3).color("lime")
 
 // subida: redoble de caja que acelera + ruido que sube
 const redoble = s("sd*<8 8 16 32>").bank("RolandTR909").gain("<.2 .24 .32 .38>").color("brown")
@@ -94,7 +94,7 @@ const subida = stack(
 )
 const drop = stack(
   bombo, palmada, hatCerr, hatAbier, crash.mask("<1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0>"),
-  bajo, padBombeo, stab, lead, pianoArp,
+  bajo, padBombeo, stab, lead, pianoArp.gain(.28),
 )
 const pausa = stack(
   pianoArp, padLargo,

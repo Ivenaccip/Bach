@@ -37,18 +37,18 @@ const melodia = note(`<
 
 // ---------- capas (cada una lleva un .color que sirve de etiqueta) ----------
 // bateria TR-808 en medio tiempo
-const kick  = s("<[bd ~ ~ ~ ~ ~ ~ ~ ~ ~ bd ~ ~ ~ ~ ~] [bd ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ bd ~ ~]>").bank("RolandTR808").gain(.75).color("red")
-const snare = s("~ ~ sd ~").bank("RolandTR808").gain(.65).color("orange")
-const clap  = s("~ ~ cp ~").bank("RolandTR808").gain(.4).color("brown")
-const hats  = s("hh*16").bank("RolandTR808").gain("[.16 .09 .22 .09]*4").color("yellow")
-const ohat  = s("<[~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ oh ~] ~>").bank("RolandTR808").gain(.25).color("white")
-const shaker = s("sh*8").bank("RolandTR808").gain(.12).color("silver")
+const kick  = s("<[bd ~ ~ ~ ~ ~ ~ ~ ~ ~ bd ~ ~ ~ ~ ~] [bd ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ bd ~ ~]>").bank("RolandTR808").gain(1.35).color("red")
+const snare = s("~ ~ sd ~").bank("RolandTR808").gain(.9).color("orange")
+const clap  = s("~ ~ cp ~").bank("RolandTR808").gain(.5).color("brown")
+const hats  = s("hh*16").bank("RolandTR808").gain("[.28 .15 .38 .15]*4").color("yellow")
+const ohat  = s("<[~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ oh ~] ~>").bank("RolandTR808").gain(.4).color("white")
+const shaker = s("sh*8").bank("RolandTR808").gain(.2).color("silver")
 const crash = s("cr").bank("RolandTR808").gain(.5).color("pink")
 const relleno = s("~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ht ht mt lt").bank("RolandTR808").gain(.5).color("teal")
 const redoble = s("sd*<8 8 16 32>").bank("RolandTR808").gain("<.3 .4 .55 .7>").color("teal")
 
 // sub de seno: una nota por negra, sigue la raiz del acorde
-const sub = raices.segment(4).s("sine").attack(.01).release(.08).gain(.6).mask(gate).color("blue")
+const sub = raices.segment(4).s("sine").attack(.01).release(.08).gain(.42).mask(gate).color("blue")
 
 // wobble: 64 notas por compas; el corte del filtro sigue un seno que da 4 u 8 vueltas por compas
 // (el compas 8 de cada ciclo da 6: tresillo). Como cada nota toma un valor del seno, el filtro
@@ -56,17 +56,17 @@ const sub = raices.segment(4).s("sine").attack(.01).release(.08).gain(.6).mask(g
 const wobble = notasWub.segment(64).s("sawtooth")
   .lpf(sine.range(160, 2600).fast("<4 8 4 8 4 8 4 6>")).lpq(4)
   .attack(.002).sustain(1).release(.008).distort(.25)
-  .gain(.7).mask(gate).color("blue")
+  .gain(.5).mask(gate).color("blue")
 // bajo con vocales ("yoi-yoi"): una octava arriba, el filtro de formantes cambia cada semicorchea
 const growl = notasWub.transpose(12).segment(32).s("sawtooth").vowel("[a e o i]*4").lpf(3200)
   .attack(.002).sustain(1).release(.008).distort(.3)
-  .gain(.5).mask(gate).color("blue")
+  .gain(.3).mask(gate).color("blue")
 
 // pad con formantes (vocales que cambian cada compas) y acordes cortos con vocal
 const pad  = acordes.s("supersaw").unison(3).vowel("<a a o o e e i i>").lpf(1600).attack(.3).release(.6)
-               .gain(.22).room(.6).size(4).orbit(2).color("purple")
+               .gain(.3).room(.6).size(4).orbit(2).color("purple")
 const stab = acordes.struct("~ ~ ~ ~ ~ ~ x ~ ~ ~ ~ ~ ~ ~ x ~").s("supersaw").unison(3).vowel("a")
-               .lpf(2400).decay(.15).sustain(0).release(.1).gain(.25).room(.4).size(3).orbit(2).color("magenta")
+               .lpf(2400).decay(.15).sustain(0).release(.1).gain(1).room(.4).size(3).orbit(2).color("magenta")
 
 // campanas FM: la modulacion en razon 3.5 las hace inarmonicas y el indice decae como una campana
 const campana = melodia.s("sine").fmh(3.5).fmi(4).fmdecay(.6).fmsustain(0)
@@ -87,7 +87,7 @@ const desde  = (n, total = 16) => mini('<' + Array.from({ length: total }, (_, i
 
 // ---------- secciones ----------
 const intro = stack(
-  pad, campana.mask(desde(4)),
+  pad, campana.mask(desde(2)),
   sub.mask(desde(8)),
   kick.mask(desde(12)), snare.mask(desde(12)),
 )
@@ -99,7 +99,7 @@ const subida = stack(
 const drop = stack(
   crash.mask("<1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0>"),
   kick, snare, clap, hats, ohat,
-  sub, wobble, pad.gain(.12), campana.gain(.3), stab,
+  sub, wobble, pad.gain(.15), campana.gain(.3), stab,
 )
 const pausa = stack(
   pad, campana.gain(.55),
@@ -114,7 +114,7 @@ const drop2 = stack(
 )
 const cierre = stack(
   kick.mask("<1 1 1 1 1 1 0 0>"), snare.mask("<1 1 1 1 1 1 0 0>"), hats.mask("<1 1 1 1 0 0 0 0>"),
-  pad.gain("<.22 .2 .18 .16 .14 .12 .1 .08>"), campana.mask("<1 1 1 1 1 1 1 0>"),
+  pad.gain("<.3 .27 .24 .21 .18 .15 .12 .09>"), campana.mask("<1 1 1 1 1 1 1 0>"),
 )
 
 // ---------- forma: 80 compases ----------
