@@ -22,9 +22,9 @@ const melodia = note(`<
 
 // ---------- capas (cada una lleva un .color que sirve de etiqueta) ----------
 // bateria TR-909: pisoton (bombo en 1 y 3) y bombo a negras
-const stomp    = s("bd ~ bd ~").bank("RolandTR909").gain(.45).color("red")
-const bombo    = s("bd*4").bank("RolandTR909").gain(.5).color("red")
-const palmada  = s("~ cp ~ cp").bank("RolandTR909").gain(.33).color("orange")
+const stomp    = s("bd ~ bd ~").bank("RolandTR909").gain(.42).color("red")
+const bombo    = s("bd*4").bank("RolandTR909").gain(.44).color("red")
+const palmada  = s("~ cp ~ cp").bank("RolandTR909").gain(.29).color("orange")
 const hatCerr8 = s("hh*8").bank("RolandTR909").gain(.12).color("yellow")
 const hatCerr  = s("hh*16").bank("RolandTR909").gain("[.12 .07 .17 .07]*4").color("yellow")
 const hatAbier = s("~ oh ~ oh ~ oh ~ oh").bank("RolandTR909").gain(.16).color("white")
@@ -88,7 +88,7 @@ const estrofa = stack(
 )
 const subida = stack(
   pianoArp, padLargo.lpf(saw.range(600,5000).slow(8)),
-  stomp.mask(mitad1), bombo.gain(.4).mask(mitad2), hatCerr8,
+  stomp.mask(mitad1), bombo.gain(.36).mask(mitad2), hatCerr8,
   palmada.gain(.25).mask(mitad2), redoble.mask(mitad2), riser, relleno.gain(.25).mask("<0 0 0 0 0 0 0 1>"),
 )
 const drop = stack(
