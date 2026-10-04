@@ -2,14 +2,19 @@
   "name": "bach-strudel-tools",
   "private": true,
   "type": "module",
-  "description": "Verificador: evalua codigo Strudel con el motor real (@strudel/*) y vuelca los eventos",
+  "description": "Verificador y renderizador: evalua codigo Strudel con el motor real (@strudel/*), vuelca los eventos y lo renderiza a audio",
   "dependencies": {
     "@strudel/core": "1.2.2",
     "@strudel/mini": "1.2.2",
     "@strudel/tonal": "1.2.2",
-    "@strudel/transpiler": "1.2.2"
+    "@strudel/transpiler": "1.2.2",
+    "@strudel/webaudio": "1.2.2",
+    "esbuild": "0.25.12",
+    "playwright-core": "1.63.0",
+    "superdough": "1.2.2"
   },
   "overrides": {
+    "@strudel/core": "1.2.2",
     "@tonaljs/abc-notation": "4.9.1",
     "@tonaljs/array": "4.8.4",
     "@tonaljs/chord": "4.10.2",

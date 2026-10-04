@@ -8,6 +8,7 @@
 - Qué decirme tras escuchar: tempo (ahora 72 negras/min), notas raras, timbre.
 - Dos ajustes rápidos están comentados al final del código: `.sound("gm_piano")` (otro piano) y `.release(0.5)` (si las notas suenan cortadas). No sé cuál suena mejor: no puedo oír.
 - Dura 4 compases y se repite en bucle.
+- Audio: [`audio/bwv846_strudel.mp3`](audio/bwv846_strudel.mp3) es este código renderizado con el motor de audio de Strudel (4 vueltas, 56 s). Los otros dos mp3 de `audio/` salen del MIDI con un piano General MIDI, no del código.
 
 ## Archivos
 

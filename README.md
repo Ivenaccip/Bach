@@ -14,7 +14,8 @@ python tools/clean_midi.py bwv846/bach_clean.mid bwv846/chunks/c01_compases_01-0
 python tools/detect_figure.py bwv846/bach_clean.mid
 python tools/verify_strudel.py bwv846/bach.strudel.js bwv846/chunks/c01_compases_01-04.mid --bars 4 --strict
 python tools/test_clean_midi.py
-tools/midi_to_mp3.sh bwv846/chunks/c01_compases_01-04.mid bwv846/audio/bwv846_compases_01-04.mp3   # necesita fluidsynth + soundfont GM + ffmpeg
+node tools/render_strudel.mjs bwv846/bach.strudel.js bwv846/audio/bwv846_strudel.mp3 --cycles 16   # el codigo Strudel con su propio motor de audio (Chromium + ffmpeg)
+tools/midi_to_mp3.sh bwv846/chunks/c01_compases_01-04.mid bwv846/audio/bwv846_compases_01-04.mp3   # alternativa: el MIDI con un piano General MIDI (fluidsynth + soundfont GM + ffmpeg)
 ```
 
 ## Herramientas (`tools/`)
@@ -26,6 +27,7 @@ tools/midi_to_mp3.sh bwv846/chunks/c01_compases_01-04.mid bwv846/audio/bwv846_co
 | `detect_figure.py` | Comprueba qué compases siguen la figura de acorde arpegiado y saca sus acordes |
 | `strudel_events.mjs` | Evalúa código Strudel con el motor real y vuelca los eventos |
 | `verify_strudel.py` | Compara código Strudel contra un MIDI: tempo, compases, notas, duraciones |
+| `render_strudel.mjs` | Código Strudel → WAV/MP3 con el motor de audio real de strudel.cc (superdough) en Chromium headless, sin tiempo real. Suena el código con el piano de Strudel, no un MIDI. Solo carga `piano` (baja las muestras a `tools/.cache/`) |
 | `midi_to_mp3.sh` | MIDI → MP3 con FluidSynth y un soundfont General MIDI (piano). Suena el MIDI, no el motor de audio de Strudel |
 | `run_web_app.cjs` | Corre la web app de MIDI-To-Strudel en local (Chromium headless) cuando la alojada no es alcanzable |
 
