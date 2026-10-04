@@ -81,8 +81,9 @@ const glissando = note(saw.range(36,84).slow(8).segment(32)).s("sawtooth").lpf(s
 
 // ---------- mascaras: encender o apagar capas por compas dentro de una seccion ----------
 const mitad2 = "<0 0 0 0 1 1 1 1>"   // 8 compases: apagado en 1-4, encendido en 5-8
-// (comillas simples: las dobles el REPL las lee como mini-notacion y "<" solo no es valida)
-const desde  = (n, total = 16) => '<' + Array.from({ length: total }, (_, i) => (i >= n ? 1 : 0)).join(' ') + '>'
+// (con comillas simples y sin mini() la mascara se ignora y la capa suena siempre; las dobles el REPL
+// las lee como mini-notacion y "<" solo no es valida)
+const desde  = (n, total = 16) => mini('<' + Array.from({ length: total }, (_, i) => (i >= n ? 1 : 0)).join(' ') + '>')
 
 // ---------- secciones ----------
 const intro = stack(
