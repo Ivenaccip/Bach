@@ -6,6 +6,8 @@
 //
 //   --cycles N   ciclos a renderizar (1 ciclo = 1 compas en bach.strudel.js; el codigo se repite
 //                en bucle, como en el REPL). Por defecto 4.
+//   --from N     ciclo desde el que empieza (0 = el principio); sirve para probar una seccion. Las notas
+//                que ya estaban sonando antes de N no se tocan.
 //   --tail S     segundos extra al final para que se apague la ultima nota. Por defecto 3.
 //
 // Si la mezcla pasa de 0 dBFS (pico > 1) se baja el volumen general hasta -1 dBFS en vez de
@@ -28,12 +30,13 @@ import { fileURLToPath } from 'node:url';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const [codeFile, outFile, ...rest] = process.argv.slice(2);
 if (!codeFile || !outFile) {
-  console.error('uso: render_strudel.mjs codigo.strudel.js salida.(wav|mp3) [--cycles N] [--tail S]');
+  console.error('uso: render_strudel.mjs codigo.strudel.js salida.(wav|mp3) [--cycles N] [--from N] [--tail S]');
   process.exit(2);
 }
 const opt = (name, dflt) => (rest.includes(name) ? Number(rest[rest.indexOf(name) + 1]) : dflt);
 const cycles = opt('--cycles', 4);
 const tail = opt('--tail', 3);
+const from = opt('--from', 0);
 
 // --- red: todo lo que el motor pida a raw.githubusercontent.com se atiende desde una cache local
 // (bajada con curl), asi el navegador no necesita salir a internet ---
@@ -81,7 +84,7 @@ try {
   await page.goto(`${base}/index.html`);
   await page.waitForFunction(() => window.__ready, null, { timeout: 20000 });
   result = await page.evaluate((a) => window.renderStrudel(a), {
-    code: fs.readFileSync(codeFile, 'utf8'), cycles, tail, debug: !!process.env.DEBUG,
+    code: fs.readFileSync(codeFile, 'utf8'), cycles, tail, from, debug: !!process.env.DEBUG,
   });
 } finally {
   await browser.close();

@@ -32,7 +32,7 @@ function wav16(left, right, sr, gain = 1) {
 
 const DS = 'https://raw.githubusercontent.com/felixroos/dough-samples/main';
 
-window.renderStrudel = async ({ code, cycles, tail, debug }) => {
+window.renderStrudel = async ({ code, cycles, tail, from = 0, debug }) => {
   window.__debug = debug;
   await core.evalScope(core, mini, tonal, webaudio);
   const { evaluate, scheduler } = core.repl({ defaultOutput: () => {}, getTime: () => 0, transpiler });
@@ -68,9 +68,9 @@ window.renderStrudel = async ({ code, cycles, tail, debug }) => {
   let failure = null;
   const scheduleCycle = async (c) => {
     const pending = [];
-    for (const hap of pattern.queryArc(c, c + 1)) {
+    for (const hap of pattern.queryArc(from + c, from + c + 1)) {
       if (!hap.hasOnset()) continue;
-      const start = hap.whole.begin.valueOf() / cps;
+      const start = (hap.whole.begin.valueOf() - from) / cps;
       const dur = hap.whole.end.sub(hap.whole.begin).valueOf() / cps;
       // `deadline` es relativo a currentTime, pero `t` (el 5.o argumento) es absoluto y manda si no es 0
       pending.push(webaudio.webaudioOutput(hap, start - off.currentTime, dur, cps, start));
