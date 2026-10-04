@@ -70,6 +70,7 @@ let result;
 try {
   const page = await browser.newPage();
   page.on('pageerror', (e) => console.error('pageerror:', e.message));
+  page.on('console', (m) => { if (['warning', 'error'].includes(m.type()) || process.env.DEBUG) console.error(`[navegador ${m.type()}] ${m.text()}`); });
   await page.route('https://raw.githubusercontent.com/**', async (route) => {
     try {
       await route.fulfill({ status: 200, body: fetchCached(route.request().url()), headers: { 'access-control-allow-origin': '*' } });
@@ -80,7 +81,7 @@ try {
   await page.goto(`${base}/index.html`);
   await page.waitForFunction(() => window.__ready, null, { timeout: 20000 });
   result = await page.evaluate((a) => window.renderStrudel(a), {
-    code: fs.readFileSync(codeFile, 'utf8'), cycles, tail,
+    code: fs.readFileSync(codeFile, 'utf8'), cycles, tail, debug: !!process.env.DEBUG,
   });
 } finally {
   await browser.close();
